@@ -22,19 +22,25 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		float horizontalInput = Input.GetAxisRaw("Horizontal");
-        float verticalInput = Input.GetAxisRaw("Vertical");
+		theRB.freezeRotation = true;
 
-		if (horizontalInput < 0) {
-			theSR.flipX = false;
-		} else if (horizontalInput > 0) {
-			theSR.flipX = true;
+		if (!PauseMenu.instance.isPaused)
+		{
+			float horizontalInput = Input.GetAxisRaw("Horizontal");
+			float verticalInput = Input.GetAxisRaw("Vertical");
+
+			if (horizontalInput < 0) {
+				theSR.flipX = false;
+			} else if (horizontalInput > 0) {
+				theSR.flipX = true;
+			}
+
+			theRB.velocity = new Vector2(moveSpeed * horizontalInput, moveSpeed * verticalInput);
 		}
 
-		theRB.velocity = new Vector2(moveSpeed * horizontalInput, moveSpeed * verticalInput);
+		anim.SetFloat("moveSpeed", Mathf.Abs(theRB.velocity.x + theRB.velocity.y));
+		// anim.SetBool("isPaused", PauseMenu.instance.isPaused);
 
-		anim.SetFloat("moveSpeed", horizontalInput * horizontalInput + verticalInput * verticalInput);
 
-		theRB.freezeRotation = true;
     }
 }
