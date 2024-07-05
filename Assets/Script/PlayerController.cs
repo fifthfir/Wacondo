@@ -35,12 +35,13 @@ public class PlayerController : MonoBehaviour
 				theSR.flipX = true;
 			}
 
-			theRB.velocity = new Vector2(moveSpeed * horizontalInput, moveSpeed * verticalInput);
+			Vector2 inputVector = new Vector2(horizontalInput, verticalInput);
+			Vector2 normalizedInput = inputVector.normalized;
+			theRB.velocity = new Vector2(moveSpeed * normalizedInput.x, moveSpeed * normalizedInput.y);
+
+			// theRB.velocity = new Vector2(moveSpeed * horizontalInput, moveSpeed * verticalInput);
 		}
 
 		anim.SetFloat("moveSpeed", Mathf.Abs(theRB.velocity.x + theRB.velocity.y));
-		// anim.SetBool("isPaused", PauseMenu.instance.isPaused);
-
-
     }
 }
